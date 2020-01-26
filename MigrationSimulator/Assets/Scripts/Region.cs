@@ -7,6 +7,7 @@ namespace Assets.Scripts
 {
     class Region
     {
+        //Input Parameters
         //Utility Function
         float TPR;  //Time Preference Rate
         float IES;  //Intertemporal elasticity of substitution
@@ -32,6 +33,40 @@ namespace Assets.Scripts
         float AOR;  //Age of retirement
         float ALE;  //Average life expectancy
 
-        
+        //Output Parameters
+        //National income (% of GDP)
+        float PC;   //Private Consumption
+        float GPG;  //Government purchases of goods and services
+        float CA;   //Current Account
+        float NNS;  //Net National Savings
+
+        //Government Indicators
+        float PPW;  //Pension premium to wage
+        float GPD;  //Gross public debt
+        float PB;   //Primary balance
+        float TR;   //Tax revenues
+            //Wage Tax, capital tax and consumptional tax are present in inputs as well
+
+        //Other Indicators
+        float COR;  //Capital output ratio
+        float IR;   //Interest Rate
+
+        float[,] Population = new float[100, 100];
+
+        //Demographic Projection
+        public void updateDemographics()
+        {
+
+        }
+        //HouseHoldBehavior
+        public void updateHouseHolds()
+        {
+
+        }
+        //FirmBehavior
+        public void updateFirms()
+        {
+
+        }
     }
 }
