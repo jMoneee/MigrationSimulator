@@ -7,6 +7,8 @@ namespace Assets.Scripts
 {
     class Region
     {
+
+        int time = 0;   //indicates how many years have gone by in the region so far
         //Input Parameters
         //Utility Function
         float TPR;  //Time Preference Rate
@@ -30,8 +32,8 @@ namespace Assets.Scripts
         float RR;   //Replacement ratio
 
         //Other parameter
-        float AOR;  //Age of retirement
-        float ALE;  //Average life expectancy
+        int Q;  //Age of retirement
+        int Z;  //Average life expectancy
 
         //Output Parameters
         //National income (% of GDP)
@@ -51,12 +53,15 @@ namespace Assets.Scripts
         float COR;  //Capital output ratio
         float IR;   //Interest Rate
 
-        float[,] Population = new float[100, 100];
+        float[,] Population = new float[100, 100];   //population for N t,j the size of total population of age j in the period t
+        float[,] migration = new float[100, 100];   //net migration for Mt,j denotes the migration in j age-cohort at the time t
+
+        float fertilityRate = 2.46f;    //temporary as we have an issue getting the values from research paper
 
         //Demographic Projection
         public void updateDemographics()
         {
-
+            //figure out how to do it recursively
         }
         //HouseHoldBehavior
         public void updateHouseHolds()
