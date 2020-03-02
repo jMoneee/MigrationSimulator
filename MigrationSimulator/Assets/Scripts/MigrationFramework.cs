@@ -1,10 +1,12 @@
+using System.Collections.Generic;
+
 public class MigrationFramework
 {
 	StaticValues values;
 	private int frPop;
 	private int usPop;
 	
-	private List<int> separatedPopValues = {
+	private List<double> separatedPopValues = {
 		neMigrants, mwMigrants, sMigrants, wMigrants, //index 0-3
 		usLessThanHighschool, usHighschool, usHighschoolGrad, usTwoYear, usBachelors, usOther, //index 4-9
 		frLessThanHighschool, frHighschool, frHighschoolGrad, frTwoYear, frBachelors, frOther, //index 10-15
@@ -22,7 +24,7 @@ public class MigrationFramework
 		updateSeparatePopValues;
 	}
 	
-	private void updateSeparatedPopValues()
+	public void updateSeparatedPopValues()
 	{
 		int usedPop = 0;
 		for (int i = 0; i < 23; i++)
@@ -32,10 +34,26 @@ public class MigrationFramework
 			else
 				usedPop = frPop;
 			
-			separatedPopValues.indexOf(i) = values.alterPopValue(usPop, separatedPopValues.indexOf(i));
+			separatedPopValues[i] = values.alterPopValue(usPop, separatedPopValues[i]);
 		}
 	}
 	
+	private void yearlyPopUpdate()
+	{
+		usPop += (usPop / 2 * usRate) + (frPop / 2 * frRate);
+	}
+	
+	// Getters
+	public double getUsPop() { return usPop; }
+	public double getfrPop() { return frPop; }
+	public List<double> getAllPopValues() { return separatedPopValues; }
+    public double getSpecificPopValue(int key)
+    {
+        if (key >= 0 && key <= 23)
+            return separatedPopValues[i];
+        else
+            return null;
+    }
 	
 
 	private class StaticValues
@@ -47,13 +65,8 @@ public class MigrationFramework
 		private float wMigrantsRate = 0.34; //3
 		
 		// Birth rates per year
-		private float frRate = 77.4; //77.4 per 1000 women
-		private float usRate = 56.2 //56.2 per 100 women
-		
-		// NOTE: I'm still not quite sure how to accurately depict this, since the rates are different.
-		//	  	 My thought right now is to consider them as population percentage increases per year, like shown below.
-		// private float frRate = 1.0774;
-		// private float usRate = 1.562;
+		private float frRate = 1.0774;
+		private float usRate = 1.562;
 		
 		// Education levels
 		private float usLessThanHighschoolRate = 0.025; //4
@@ -83,7 +96,7 @@ public class MigrationFramework
 		private float frUnEmRate = 0.045; //22
 		private float frNotWorkingRate = .34; //23
 		
-		private int alterPopValue(int pop, int key)
+		private double alterPopValue(int pop, int key)
 		{
 			switch(key)
 			{
