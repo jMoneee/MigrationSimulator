@@ -1,9 +1,10 @@
 using System.Collections.Generic;
+using UnityEngine;
 
-public class MigrationFramework
+public static class MigrationFramework
 {
-	private int frPop;
-	private int usPop;
+	private static long frPop = 44406371;
+    private static long usPop = 281312807;
 
     /*
 	private List<double> separatedPopValues = {
@@ -15,46 +16,35 @@ public class MigrationFramework
 	};
     */
 
-    Dictionary<string, double> separatedPopValues = new Dictionary<string, double>();
-
-	public MigrationFramework()
-	{
-		frPop = 44406371;
-		usPop = 281312807;
-        populateDictionary();
-		
-		updateSeparatePopValues();
-	}
-
-    private void populateDictionary()
+    private static Dictionary<string, long> separatedPopValues = new Dictionary<string, long>
     {
-        separatedPopValues.Add("neMigrants", 0);
-        separatedPopValues.Add("mwMigrants", 0);
-        separatedPopValues.Add("sMigrants", 0);
-        separatedPopValues.Add("wMigrants", 0);
-        separatedPopValues.Add("usLessThanHighschool", 0);
-        separatedPopValues.Add("usHighschool", 0);
-        separatedPopValues.Add("usHighschoolGrad", 0);
-        separatedPopValues.Add("usTwoYear", 0);
-        separatedPopValues.Add("usBachelors", 0);
-        separatedPopValues.Add("usOther", 0);
-        separatedPopValues.Add("frLessThanHighschool", 0);
-        separatedPopValues.Add("frHighschool", 0);
-        separatedPopValues.Add("frHighschoolGrad", 0);
-        separatedPopValues.Add("frTwoYear", 0);
-        separatedPopValues.Add("frBachelors", 0);
-        separatedPopValues.Add("frOther", 0);
-        separatedPopValues.Add("usInc", 0);
-        separatedPopValues.Add("frInc", 0);
-        separatedPopValues.Add("frLegalInc", 0);
-        separatedPopValues.Add("frIllegalInc", 0);
-        separatedPopValues.Add("usUnEm", 0);
-        separatedPopValues.Add("usNotWorking", 0);
-        separatedPopValues.Add("frUnEm", 0);
-        separatedPopValues.Add("frNotWorking", 0);
-    }
+        { "neMigrants", 9325338 },
+        { "mwMigrants", 4884701 },
+        { "sMigrants", 14654103 },
+        { "wMigrants", 15098167 },
+        { "usLessThanHighschool", 7032821 },
+        { "usHighschool", 17722707 },
+        { "usHighschoolGrad", 78767586 },
+        { "usTwoYear", 87488283 },
+        { "usBachelors", 56543875 },
+        { "usOther", 33787537 },
+        { "frLessThanHighschool", 7726709 },
+        { "frHighschool", 4440638 },
+        { "frHighschoolGrad", 100802647 },
+        { "frTwoYear", 8348398 },
+        { "frBachelors", 7904335 },
+        { "frOther", 5906048 },
+        { "usInc", 4304086 },
+        { "frInc", 293083 },
+        { "frLegalInc", 208710 },
+        { "frIllegalInc", 377545 },
+        { "usUnEm", 15190892 },
+        { "usNotWorking", 105492303 },
+        { "frUnEm", 1998287 },
+        { "frNotWorking", 15098167 }
+    };
 	
-	public void updateSeparatePopValues()
+	private static void updateSeparatePopValues()
 	{
         /*
 		int usedPop = 0;
@@ -68,8 +58,8 @@ public class MigrationFramework
 			separatedPopValues. = values.alterPopValue(usPop, i);
 		}
         */
-        Dictionary<string, double> newValues = new Dictionary<string, double>();
-        foreach(KeyValuePair<string, double> kvp in separatedPopValues)
+        Dictionary<string, long> newValues = new Dictionary<string, long>();
+        foreach(KeyValuePair<string, long> kvp in separatedPopValues)
         {
             if (kvp.Key.Substring(0, 2) == "us")
                 newValues.Add(kvp.Key, StaticValues.alterPopValue(usPop, kvp.Key));
@@ -79,24 +69,27 @@ public class MigrationFramework
         separatedPopValues = newValues;
 	}
 	
-	public void yearlyPopUpdate()
+	public static void yearlyPopUpdate()
 	{
-		usPop += (int)((usPop / 2 * StaticValues.getUsRateIncrease()) + (frPop / 2 * StaticValues.getFrRateIncrease()));
+		usPop += (long)(((usPop / 2) * StaticValues.getUsRateIncrease()) + ((frPop / 2) * StaticValues.getFrRateIncrease()));
+        frPop += (long) StaticValues.getMigrantIncrease();
+        usPop -= (long)(usPop * StaticValues.getDeathRate());
+        frPop -= (long)(frPop * StaticValues.getDeathRate());
         updateSeparatePopValues();
 	}
 
-    public void implementNewPolicy(float usPercentChange, float frPercentChange)
+    public static void implementNewPolicy(float usPercentChange, float frPercentChange)
     {
-        usPop = (int) (usPop * usPercentChange);
-        frPop = (int) (frPop * frPercentChange);
+        usPop = (long) (usPop * usPercentChange);
+        frPop = (long) (frPop * frPercentChange);
         updateSeparatePopValues();
     }
 	
 	// Getters
-	public double getUsPop() { return usPop; }
-	public double getFrPop() { return frPop; }
-	public Dictionary<string, double> getAllPopValues() { return separatedPopValues; }
-    public double getSpecificPopValue(string dictKey)
+	public static long getUsPop() { return usPop; }
+	public static long getFrPop() { return frPop; }
+	public static Dictionary<string, long> getAllPopValues() { return separatedPopValues; }
+    public static long getSpecificPopValue(string dictKey)
     {
         if (separatedPopValues.ContainsKey(dictKey))
             return separatedPopValues[dictKey];
@@ -114,11 +107,17 @@ public class MigrationFramework
 		private static float wMigrantsRate = 0.34f; //3
 		
 		// Birth rates per year
-		private static float frRate = 1.0774f;
-		private static float usRate = 1.562f;
-		
-		// Education levels
-		private static float usLessThanHighschoolRate = 0.025f; //4
+		private static float frBirthRate = 1.0774f;
+		private static float usBirthRate = 1.0562f;
+
+        // Death rates per year
+        private static float deathRate = 0.008638f;
+
+        // Migration rate per year
+        private static float migrationIncrease = 1000000;
+
+        // Education levels
+        private static float usLessThanHighschoolRate = 0.025f; //4
 		private static float usHighschoolRate = 0.063f; //5
 		private static float usHighschoolGradRate = 0.28f; //6
  		private static float usTwoYearRate = 0.311f; //7
@@ -145,81 +144,81 @@ public class MigrationFramework
 		private static float frUnEmRate = 0.045f; //22
 		private static float frNotWorkingRate = .34f; //23
 		
-		public static double alterPopValue(int pop, string key)
+		public static long alterPopValue(long pop, string key)
 		{
 			switch(key)
 			{
 				case "neMigrants":
-					return pop * neMigrantsRate;
+					return (long) (pop * neMigrantsRate);
 					break;
 				case "mwMigrants":
-					return pop * mwMigrantsRate;
+					return (long)(pop * mwMigrantsRate);
 					break;
 				case "sMigrants":
-					return pop * sMigrantsRate;
+					return (long)(pop * sMigrantsRate);
 					break;
 				case "wMigrants":
-					return pop * wMigrantsRate;
+					return (long)(pop * wMigrantsRate);
 					break;
 				case "usLessThanHighschool":
-					return pop * usLessThanHighschoolRate;
+					return (long)(pop * usLessThanHighschoolRate);
 					break;
 				case "usHighschool":
-					return pop * usHighschoolRate;
+					return (long)(pop * usHighschoolRate);
 					break;
 				case "usHighschoolGrad":
-					return pop * usHighschoolGradRate;
+					return (long)(pop * usHighschoolGradRate);
 					break;
 				case "usTwoYear":
-					return pop * usTwoYearRate;
+					return (long)(pop * usTwoYearRate);
 					break;
 				case "usBachelors":
-					return pop * usBachelorsRate;
+					return (long)(pop * usBachelorsRate);
 					break;
 				case "usOther":
-					return pop * usOtherRate;
+					return (long)(pop * usOtherRate);
 					break;
 				case "frLessThanHighschool":
-					return pop * frLessThanHighschoolRate;
+					return (long)(pop * frLessThanHighschoolRate);
 					break;
 				case "frHighschool":
-					return pop * frHighschoolRate;
+					return (long)(pop * frHighschoolRate);
 					break;
 				case "frHighschoolGrad":
-					return pop * frHighschoolGradRate;
+					return (long)(pop * frHighschoolGradRate);
 					break;
 				case "frTwoYear":
-					return pop * frTwoYearRate;
+					return (long)(pop * frTwoYearRate);
 					break;
 				case "frBachelors":
-					return pop * frBachelorsRate;
+					return (long)(pop * frBachelorsRate);
 					break;
 				case "frOther":
-					return pop * frOtherRate;
+					return (long)(pop * frOtherRate);
 					break;
 				case "usInc":
-					return pop * usIncRate;
+					return (long)(pop * usIncRate);
 					break;
 				case "frInc":
-					return pop * frIncRate;
+					return (long)(pop * frIncRate);
 					break;
 				case "frLegalInc":
-					return pop * frLegalIncRate;
+					return (long)(pop * frLegalIncRate);
 					break;
 				case "frIllegalInc":
-					return pop * frIllegalIncRate;
+					return (long)(pop * frIllegalIncRate);
 					break;
 				case "usUnEm":
-					return pop * usUnEmRate;
+					return (long)(pop * usUnEmRate);
 					break;
 				case "usNotWorking":
-					return pop * usNotWorkingRate;
+					return (long)(pop * usNotWorkingRate);
 					break;
 				case "frUnEm":
-					return pop * frUnEmRate;
+					return (long)(pop * frUnEmRate);
 					break;
 				case "frNotWorking":
-					return pop * frNotWorkingRate;
+					return (long)(pop * frNotWorkingRate);
 					break;
 				default:
 					return pop;
@@ -227,7 +226,9 @@ public class MigrationFramework
 			}
 		}
 		
-        public static float getUsRateIncrease() { return usRate; }
-        public static float getFrRateIncrease() { return frRate; }
+        public static float getUsRateIncrease() { return usBirthRate; }
+        public static float getFrRateIncrease() { return frBirthRate; }
+        public static float getDeathRate() { return deathRate; }
+        public static float getMigrantIncrease() { return migrationIncrease; }
 	}
 }
