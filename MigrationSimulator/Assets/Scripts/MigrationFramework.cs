@@ -114,7 +114,7 @@ public static class MigrationFramework
         private static float deathRate = 0.008638f;
 
         // Migration rate per year
-        private static float migrationIncrease = 1000000;
+        private static float migrationIncrease = 799046;
 
         // Education levels
         private static float usLessThanHighschoolRate = 0.025f; //4
