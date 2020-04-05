@@ -8,7 +8,7 @@ public class AgentDriver : MonoBehaviour {
     public GameObject foreignPrefab;
     public GameObject nativePrefab;
 
-    public GameObject[] cities;
+    GameObject[] cities;
     float timer = 1;
 
     // Use this for initialization
@@ -28,18 +28,18 @@ public class AgentDriver : MonoBehaviour {
             for (int i = 0; i < r; i++)
             {
                 int choice = (int)Random.Range(0, 2);
+                GameObject chosenPrefab = null;
                 if (choice == 0)
-                {
-                    GameObject temp = Instantiate<GameObject>(foreignPrefab,
-                        cities[Random.Range(0, cities.Length)].transform.position, new Quaternion(90, 0, 0, 0));
-                    temp.GetComponent<NavMeshAgent>().SetDestination(cities[Random.Range(0, cities.Length)].transform.position);
-                }
+                    chosenPrefab = foreignPrefab;
                 else if (choice == 1)
-                {
-                    GameObject temp = Instantiate<GameObject>(nativePrefab,
-                        cities[Random.Range(0, cities.Length)].transform.position, new Quaternion(90, 0, 0, 0));
-                    temp.GetComponent<NavMeshAgent>().SetDestination(cities[Random.Range(0, cities.Length)].transform.position);
-                }
+                    chosenPrefab = nativePrefab;
+
+                GameObject temp = Instantiate<GameObject>(chosenPrefab,
+                    cities[Random.Range(0, cities.Length)].transform.position, new Quaternion(90, 0, 0, 0));
+                GameObject targetCity = cities[Random.Range(0, cities.Length)];
+                targetCity.GetComponent<CityBehavior>().DescaleCity();
+                temp.GetComponent<AgentBehavior>().SetTarget(targetCity.name);
+                temp.GetComponent<NavMeshAgent>().SetDestination(targetCity.transform.position);
             }
         }
 	}
