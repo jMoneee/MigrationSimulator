@@ -129,14 +129,14 @@ public class FrameworkDriver : MonoBehaviour {
             + "\nSouth Migrants: " + MigrationFramework.getSpecificPopValue("sMigrants")
             + "\nWest Migrants: " + MigrationFramework.getSpecificPopValue("wMigrants");
 
-        usEdText.text = "Less than High School: " + MigrationFramework.getSpecificPopValue("usLessThanHighschool")
+        usEdText.text = "Below High School: " + MigrationFramework.getSpecificPopValue("usLessThanHighschool")
             + "\nSome High School: " + MigrationFramework.getSpecificPopValue("usHighschool")
             + "\nHigh School Diploma: " + MigrationFramework.getSpecificPopValue("usHighschoolGrad")
             + "\nTwo Year Diploma: " + MigrationFramework.getSpecificPopValue("usTwoYear")
             + "\nBachelors Diploma: " + MigrationFramework.getSpecificPopValue("usBachelors")
             + "\nOther: " + MigrationFramework.getSpecificPopValue("usOther");
 
-        frEdText.text = "Less than High School: " + MigrationFramework.getSpecificPopValue("frLessThanHighschool")
+        frEdText.text = "Below High School: " + MigrationFramework.getSpecificPopValue("frLessThanHighschool")
             + "\nSome High School: " + MigrationFramework.getSpecificPopValue("frHighschool")
             + "\nHigh School Diploma: " + MigrationFramework.getSpecificPopValue("frHighschoolGrad")
             + "\nTwo Year Diploma: " + MigrationFramework.getSpecificPopValue("frTwoYear")
@@ -150,7 +150,7 @@ public class FrameworkDriver : MonoBehaviour {
             + "\nIllegal Incarceration: " + MigrationFramework.getSpecificPopValue("frIllegalInc");
 
         usUnemText.text = "Unemployment Number: " + MigrationFramework.getSpecificPopValue("usUnEm")
-            + "\nOut of Work Force: " + MigrationFramework.getSpecificPopValue("usNotWorking");
+            + "\nOut of Work Force: " + MigrationFramework.getSpecificPopValue("usUnEm");
 
         frUnemText.text = "Unemployment Number: " + MigrationFramework.getSpecificPopValue("frUnEm")
             + "\nOut of Work Force: " + MigrationFramework.getSpecificPopValue("frNotWorking");
