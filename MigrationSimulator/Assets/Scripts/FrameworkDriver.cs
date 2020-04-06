@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,10 +17,21 @@ public class FrameworkDriver : MonoBehaviour {
     public Text usUnemText;
     public Text frUnemText;
 
+    public Text edPolicyText;
+    int edPolicyLevel = 0;
+    public Text jobPolicyText;
+    int jobPolicyLevel = 0;
+    public Text jailPolicyText;
+    int jailPolicyLevel = 0;
+
+    public Slider migrantSlider;
+    public Text sliderText;
+
     // Use this for initialization
     void Start ()
     {
         updateAllData();
+        sliderText.text = migrantSlider.value.ToString();
 	}
 	
 	// Update is called once per frame
@@ -34,10 +46,67 @@ public class FrameworkDriver : MonoBehaviour {
         updateAllData();
     }
 
-    public void newPolicy(float us, float fr)
+    public void educationPolicy(bool up)
     {
-        MigrationFramework.implementNewPolicy(us, fr);
+        float[] x = { -0.011f, 0.004f, 0.003f, 0.002f, 0.001f, 0.001f, -0.011f, 0.004f, 0.003f, 0.002f, 0.001f, 0.001f };
+        if (!up)
+            x = Array.ConvertAll(x, f => f * -1);
+
+        string[] y = { "usLessThanHighschoolRate", "usHighschoolRate", "usHighschoolGradRate",
+            "usTwoYearRate", "usBachelorsRate", "usOtherRate", "frLessThanHighschoolRate",
+            "frHighschoolRate", "frHighschoolGradRate", "frTwoYearRate", "frBachelorsRate", "frOtherRate" };
+
+        List<float> values = new List<float>(x);
+        List<string> keys = new List<string>(y);
+
+        MigrationFramework.policyChange(values, keys);
         updateAllData();
+        if (up) edPolicyLevel++;
+        else edPolicyLevel--;
+        edPolicyText.text = "Level: " + edPolicyLevel;
+    }
+
+    public void jobPolicy(bool up)
+    {
+        float[] x = { -0.004f, -0.004f };
+        if (!up)
+            x = Array.ConvertAll(x, f => f * -1);
+
+        string[] y = { "usUnEmRate", "frUnEmRate" };
+
+        List<float> values = new List<float>(x);
+        List<string> keys = new List<string>(y);
+
+        MigrationFramework.policyChange(values, keys);
+        updateAllData();
+        if (up) jobPolicyLevel++;
+        else jobPolicyLevel--;
+        jobPolicyText.text = "Level: " + jobPolicyLevel;
+    }
+
+    public void jailPolicy(bool up)
+    {
+        float[] x = { -0.001f, -0.001f, -0.001f, -0.001f };
+        if (!up)
+            x = Array.ConvertAll(x, f => f * -1);
+
+        string[] y = { "usIncRate", "frIncRate", "frLegalIncRate", "frIllegalIncRate" };
+
+        List<float> values = new List<float>(x);
+        List<string> keys = new List<string>(y);
+
+        MigrationFramework.policyChange(values, keys);
+        updateAllData();
+        if (up) jailPolicyLevel++;
+        else jailPolicyLevel--;
+        jailPolicyText.text = "Level: " + jailPolicyLevel;
+    }
+
+    public void setMigrantsPerYear()
+    {
+        MigrationFramework.setMigrantsLevels((int)migrantSlider.value);
+        updateAllData();
+        sliderText.text = migrantSlider.value.ToString();
     }
 
     public long getPop(int key)
