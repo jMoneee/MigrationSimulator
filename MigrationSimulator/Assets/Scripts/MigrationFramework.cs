@@ -87,9 +87,9 @@ public static class MigrationFramework
         updateSeparatePopValues();
 	}
 
-    public static void policyChange(List<float> valueChanges, List<string> dicKeys)
+    public static void policyChange(float[] valueChanges, string[] dicKeys)
     {
-        for (int i = 0; i < valueChanges.Count; i++)
+        for (int i = 0; i < valueChanges.Length; i++)
             StaticValues.alterStaticValue(valueChanges[i], dicKeys[i]);
         updateSeparatePopValues();
     }
@@ -98,6 +98,8 @@ public static class MigrationFramework
     {
         StaticValues.setMigrantIncrease(i);
     }
+
+    public static int getMigrants() { return (int)StaticValues.getMigrantIncrease(); }
 	
 	// Getters
 	public static long getUsPop() { return usPop; }
@@ -163,77 +165,101 @@ public static class MigrationFramework
 			switch(key)
 			{
 				case "neMigrants":
-					return (long) (pop * neMigrantsRate);
+                    if ((long)(pop * neMigrantsRate) < 0) return 0;
+                    else return (long)(pop * neMigrantsRate);
 					break;
 				case "mwMigrants":
-					return (long)(pop * mwMigrantsRate);
-					break;
+                    if ((long)(pop * mwMigrantsRate) < 0) return 0;
+                    else return (long)(pop * mwMigrantsRate);
+                    break;
 				case "sMigrants":
-					return (long)(pop * sMigrantsRate);
-					break;
+                    if ((long)(pop * sMigrantsRate) < 0) return 0;
+                    else return (long)(pop * sMigrantsRate);
+                    break;
 				case "wMigrants":
-					return (long)(pop * wMigrantsRate);
-					break;
+                    if ((long)(pop * wMigrantsRate) < 0) return 0;
+                    else return (long)(pop * wMigrantsRate);
+                    break;
 				case "usLessThanHighschool":
-					return (long)(pop * usLessThanHighschoolRate);
-					break;
+                    if ((long)(pop * usLessThanHighschoolRate) < 0) return 0;
+                    else return (long)(pop * usLessThanHighschoolRate);
+                    break;
 				case "usHighschool":
-					return (long)(pop * usHighschoolRate);
-					break;
+                    if ((long)(pop * usHighschoolRate) < 0) return 0;
+                    else return (long)(pop * usHighschoolRate);
+                    break;
 				case "usHighschoolGrad":
-					return (long)(pop * usHighschoolGradRate);
-					break;
+                    if ((long)(pop * usHighschoolGradRate) < 0) return 0;
+                    else return (long)(pop * usHighschoolGradRate);
+                    break;
 				case "usTwoYear":
-					return (long)(pop * usTwoYearRate);
-					break;
+                    if ((long)(pop * usTwoYearRate) < 0) return 0;
+                    else return (long)(pop * usTwoYearRate);
+                    break;
 				case "usBachelors":
-					return (long)(pop * usBachelorsRate);
-					break;
+                    if ((long)(pop * usBachelorsRate) < 0) return 0;
+                    else return (long)(pop * usBachelorsRate);
+                    break;
 				case "usOther":
-					return (long)(pop * usOtherRate);
-					break;
+                    if ((long)(pop * usOtherRate) < 0) return 0;
+                    else return (long)(pop * usOtherRate);
+                    break;
 				case "frLessThanHighschool":
-					return (long)(pop * frLessThanHighschoolRate);
-					break;
+                    if ((long)(pop * frLessThanHighschoolRate) < 0) return 0;
+                    else return (long)(pop * frLessThanHighschoolRate);
+                    break;
 				case "frHighschool":
-					return (long)(pop * frHighschoolRate);
-					break;
+                    if ((long)(pop * frHighschoolRate) < 0) return 0;
+                    else return (long)(pop * frHighschoolRate);
+                    break;
 				case "frHighschoolGrad":
-					return (long)(pop * frHighschoolGradRate);
-					break;
+                    if ((long)(pop * frHighschoolGradRate) < 0) return 0;
+                    else return (long)(pop * frHighschoolGradRate);
+                    break;
 				case "frTwoYear":
-					return (long)(pop * frTwoYearRate);
-					break;
+                    if ((long)(pop * frTwoYearRate) < 0) return 0;
+                    else return (long)(pop * frTwoYearRate);
+                    break;
 				case "frBachelors":
-					return (long)(pop * frBachelorsRate);
-					break;
+                    if ((long)(pop * frBachelorsRate) < 0) return 0;
+                    else return (long)(pop * frBachelorsRate);
+                    break;
 				case "frOther":
-					return (long)(pop * frOtherRate);
-					break;
+                    if ((long)(pop * frOtherRate) < 0) return 0;
+                    else return (long)(pop * frOtherRate);
+                    break;
 				case "usInc":
-					return (long)(pop * usIncRate);
-					break;
+                    if ((long)(pop * usIncRate) < 0) return 0;
+                    else return (long)(pop * usIncRate);
+                    break;
 				case "frInc":
-					return (long)(pop * frIncRate);
-					break;
+                    if ((long)(pop * frIncRate) < 0) return 0;
+                    else return (long)(pop * frIncRate);
+                    break;
 				case "frLegalInc":
-					return (long)(pop * frLegalIncRate);
-					break;
+                    if ((long)(pop * frLegalIncRate) < 0) return 0;
+                    else return (long)(pop * frLegalIncRate);
+                    break;
 				case "frIllegalInc":
-					return (long)(pop * frIllegalIncRate);
-					break;
+                    if ((long)(pop * frIllegalIncRate) < 0) return 0;
+                    else return (long)(pop * frIllegalIncRate);
+                    break;
 				case "usUnEm":
-					return (long)(pop * usUnEmRate);
-					break;
+                    if ((long)(pop * usUnEmRate) < 0) return 0;
+                    else return (long)(pop * usUnEmRate);
+                    break;
 				case "usNotWorking":
-					return (long)(pop * usNotWorkingRate);
-					break;
+                    if ((long)(pop * usNotWorkingRate) < 0) return 0;
+                    else return (long)(pop * usNotWorkingRate);
+                    break;
 				case "frUnEm":
-					return (long)(pop * frUnEmRate);
-					break;
+                    if ((long)(pop * frUnEmRate) < 0) return 0;
+                    else return (long)(pop * frUnEmRate);
+                    break;
 				case "frNotWorking":
-					return (long)(pop * frNotWorkingRate);
-					break;
+                    if ((long)(pop * frNotWorkingRate) < 0) return 0;
+                    else return (long)(pop * frNotWorkingRate);
+                    break;
 				default:
 					return pop;
 					break;
