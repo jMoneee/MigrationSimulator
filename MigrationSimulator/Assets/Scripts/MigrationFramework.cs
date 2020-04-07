@@ -30,7 +30,7 @@ public static class MigrationFramework
         { "usOther", 33787537 },
         { "frLessThanHighschool", 7726709 },
         { "frHighschool", 4440638 },
-        { "frHighschoolGrad", 100802647 },
+        { "frHighschoolGrad", 10802647 },
         { "frTwoYear", 8348398 },
         { "frBachelors", 7904335 },
         { "frOther", 5906048 },
@@ -147,7 +147,7 @@ public static class MigrationFramework
 		
 		// Incarceration Rate
 		private static float usIncRate = 0.0153f; //16
-		private static float frIncRate = 0.0066f; //17
+		private static float frIncRate = 0.0132f; //17
 		private static float frLegalIncRate = 0.0047f; //18
 		private static float frIllegalIncRate = 0.0085f; //19
 		
