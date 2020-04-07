@@ -71,18 +71,25 @@ public static class MigrationFramework
 	
 	public static void yearlyPopUpdate()
 	{
-		usPop += (long)(((usPop / 2) * StaticValues.getUsRateIncrease()) + ((frPop / 2) * StaticValues.getFrRateIncrease()));
-        frPop += (long) StaticValues.getMigrantIncrease();
-        usPop -= (long)(usPop * StaticValues.getDeathRate());
-        frPop -= (long)(frPop * StaticValues.getDeathRate());
+        long usPopGrowth = (long)(((usPop / 2) * StaticValues.getUsRateIncrease()) + ((frPop / 2) * StaticValues.getFrRateIncrease()));
+        long frPopGrowth = (long) StaticValues.getMigrantIncrease();
+        long usPopDec = (long)(usPop * StaticValues.getDeathRate());
+        long frPopDec =  (long)(frPop * StaticValues.getDeathRate());
+        usPop = usPop + usPopGrowth - usPopDec;
+        frPop = frPop + frPopGrowth - frPopDec;
         updateSeparatePopValues();
 	}
 
-    public static void implementNewPolicy(float usPercentChange, float frPercentChange)
+    public static void policyChange(List<float> valueChanges, List<string> dicKeys)
     {
-        usPop = (long) (usPop * usPercentChange);
-        frPop = (long) (frPop * frPercentChange);
+        for (int i = 0; i < valueChanges.Count; i++)
+            StaticValues.alterStaticValue(valueChanges[i], dicKeys[i]);
         updateSeparatePopValues();
+    }
+
+    public static void setMigrantsLevels(int i)
+    {
+        StaticValues.setMigrantIncrease(i);
     }
 	
 	// Getters
@@ -114,7 +121,7 @@ public static class MigrationFramework
         private static float deathRate = 0.008638f;
 
         // Migration rate per year
-        private static float migrationIncrease = 799046;
+        private static int migrationIncrease = 799046;
 
         // Education levels
         private static float usLessThanHighschoolRate = 0.025f; //4
@@ -225,10 +232,90 @@ public static class MigrationFramework
 					break;
 			}
 		}
-		
+
+        public static void alterStaticValue(float alterVal, string key)
+        {
+            switch (key)
+            {
+                case "neMigrants":
+                    neMigrantsRate += alterVal;
+                    break;
+                case "mwMigrants":
+                    mwMigrantsRate += alterVal;
+                    break;
+                case "sMigrants":
+                    sMigrantsRate += alterVal;
+                    break;
+                case "wMigrants":
+                    wMigrantsRate += alterVal;
+                    break;
+                case "usLessThanHighschool":
+                    usLessThanHighschoolRate += alterVal;
+                    break;
+                case "usHighschool":
+                    usHighschoolRate += alterVal;
+                    break;
+                case "usHighschoolGrad":
+                    usHighschoolGradRate += alterVal;
+                    break;
+                case "usTwoYear":
+                    usTwoYearRate += alterVal;
+                    break;
+                case "usBachelors":
+                    usBachelorsRate += alterVal;
+                    break;
+                case "usOther":
+                    usOtherRate += alterVal;
+                    break;
+                case "frLessThanHighschool":
+                    frLessThanHighschoolRate += alterVal;
+                    break;
+                case "frHighschool":
+                    frHighschoolRate += alterVal;
+                    break;
+                case "frHighschoolGrad":
+                    frHighschoolGradRate += alterVal;
+                    break;
+                case "frTwoYear":
+                    frTwoYearRate += alterVal;
+                    break;
+                case "frBachelors":
+                    frBachelorsRate += alterVal;
+                    break;
+                case "frOther":
+                    frOtherRate += alterVal;
+                    break;
+                case "usInc":
+                    usIncRate += alterVal;
+                    break;
+                case "frInc":
+                    frIncRate += alterVal;
+                    break;
+                case "frLegalInc":
+                    frLegalIncRate += alterVal;
+                    break;
+                case "frIllegalInc":
+                    frIllegalIncRate += alterVal;
+                    break;
+                case "usUnEm":
+                    usUnEmRate += alterVal;
+                    break;
+                case "usNotWorking":
+                    usNotWorkingRate += alterVal;
+                    break;
+                case "frUnEm":
+                    frUnEmRate += alterVal;
+                    break;
+                case "frNotWorking":
+                    frNotWorkingRate += alterVal;
+                    break;
+            }
+        }
+
         public static float getUsRateIncrease() { return usBirthRate; }
         public static float getFrRateIncrease() { return frBirthRate; }
         public static float getDeathRate() { return deathRate; }
         public static float getMigrantIncrease() { return migrationIncrease; }
+        public static void setMigrantIncrease(int x) { migrationIncrease = x; }
 	}
 }
