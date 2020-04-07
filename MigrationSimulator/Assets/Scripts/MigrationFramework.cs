@@ -71,12 +71,19 @@ public static class MigrationFramework
 	
 	public static void yearlyPopUpdate()
 	{
+        Debug.Log("US Pop Begin" + usPop);
         long usPopGrowth = (long)(((usPop / 2) * StaticValues.getUsRateIncrease()) + ((frPop / 2) * StaticValues.getFrRateIncrease()));
+        Debug.Log("usPopGrowth " + usPopGrowth);
         long frPopGrowth = (long) StaticValues.getMigrantIncrease();
+        Debug.Log("frPopGrowth " + frPopGrowth);
         long usPopDec = (long)(usPop * StaticValues.getDeathRate());
+        Debug.Log("usPopDec " + usPopDec);
         long frPopDec =  (long)(frPop * StaticValues.getDeathRate());
+        Debug.Log("frPopDec " + frPopDec);
         usPop = usPop + usPopGrowth - usPopDec;
+        Debug.Log("US Pop "+ usPop);
         frPop = frPop + frPopGrowth - frPopDec;
+        Debug.Log("FR Pop " + frPop);
         updateSeparatePopValues();
 	}
 
@@ -114,8 +121,8 @@ public static class MigrationFramework
 		private static float wMigrantsRate = 0.34f; //3
 		
 		// Birth rates per year
-		private static float frBirthRate = 1.0774f;
-		private static float usBirthRate = 1.0562f;
+		private static float frBirthRate = 0.0774f;
+		private static float usBirthRate = 0.0562f;
 
         // Death rates per year
         private static float deathRate = 0.008638f;
