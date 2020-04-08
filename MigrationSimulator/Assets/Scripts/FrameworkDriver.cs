@@ -26,18 +26,12 @@ public class FrameworkDriver : MonoBehaviour {
 
     public Slider migrantSlider;
     public Text sliderText;
-
-    // Use this for initialization
+    
     void Start ()
     {
         updateAllData();
         sliderText.text = migrantSlider.value.ToString();
 	}
-	
-	// Update is called once per frame
-	void Update ()
-    {
-    }
 
     public void incrementYear()
     {
@@ -95,7 +89,6 @@ public class FrameworkDriver : MonoBehaviour {
     public void setMigrantsPerYear()
     {
         MigrationFramework.setMigrantsLevels((int)migrantSlider.value);
-        updateAllData();
         sliderText.text = migrantSlider.value.ToString();
     }
 
