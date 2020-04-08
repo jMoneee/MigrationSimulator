@@ -114,8 +114,8 @@ public class FrameworkDriver : MonoBehaviour {
     private void updateAllData()
     {
         currentYearText.text = "Current Year: " + currentYear;
-        frPopText.text = "Foreign Population: " + MigrationFramework.getFrPop();
-        usPopText.text = "Native Population: " + MigrationFramework.getUsPop();
+        frPopText.text = "Foreign born Population: " + MigrationFramework.getFrPop();
+        usPopText.text = "Native born Population: " + MigrationFramework.getUsPop();
 
         migrantsText.text = "NE Migrants: " + MigrationFramework.getSpecificPopValue("neMigrants")
             + "\nMW Migrants: " + MigrationFramework.getSpecificPopValue("mwMigrants")
