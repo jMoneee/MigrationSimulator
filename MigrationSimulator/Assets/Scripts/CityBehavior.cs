@@ -14,11 +14,6 @@ public class CityBehavior : MonoBehaviour {
         baseXScale = this.gameObject.transform.localScale.x;
         baseZScale = this.gameObject.transform.localScale.z;
     }
-	
-	// Update is called once per frame
-	void Update ()
-    {
-	}
 
     public void ScaleCity()
     {
@@ -32,7 +27,7 @@ public class CityBehavior : MonoBehaviour {
         UpdateScale();
     }
 
-    public void UpdateScale()
+    private  void UpdateScale()
     {
         this.gameObject.transform.localScale = new Vector3(baseXScale * scaler,
             1, baseZScale * scaler);
