@@ -37,8 +37,7 @@ public class FrameworkDriver : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-		
-	}
+    }
 
     public void incrementYear()
     {
@@ -48,16 +47,13 @@ public class FrameworkDriver : MonoBehaviour {
 
     public void educationPolicy(bool up)
     {
-        float[] x = { -0.011f, 0.004f, 0.003f, 0.002f, 0.001f, 0.001f, -0.011f, 0.004f, 0.003f, 0.002f, 0.001f, 0.001f };
+        float[] values = { -0.011f, 0.004f, 0.003f, 0.002f, 0.001f, 0.001f, -0.011f, 0.004f, 0.003f, 0.002f, 0.001f, 0.001f };
         if (!up)
-            x = Array.ConvertAll(x, f => f * -1);
+            values = Array.ConvertAll(values, f => f * -1);
 
-        string[] y = { "usLessThanHighschoolRate", "usHighschoolRate", "usHighschoolGradRate",
-            "usTwoYearRate", "usBachelorsRate", "usOtherRate", "frLessThanHighschoolRate",
-            "frHighschoolRate", "frHighschoolGradRate", "frTwoYearRate", "frBachelorsRate", "frOtherRate" };
-
-        List<float> values = new List<float>(x);
-        List<string> keys = new List<string>(y);
+        string[] keys = { "usLessThanHighschool", "usHighschool", "usHighschoolGrad",
+            "usTwoYear", "usBachelors", "usOther", "frLessThanHighschool",
+            "frHighschool", "frHighschoolGrad", "frTwoYear", "frBachelors", "frOther" };
 
         MigrationFramework.policyChange(values, keys);
         updateAllData();
@@ -68,14 +64,11 @@ public class FrameworkDriver : MonoBehaviour {
 
     public void jobPolicy(bool up)
     {
-        float[] x = { -0.004f, -0.004f };
+        float[] values = { -0.004f, -0.004f };
         if (!up)
-            x = Array.ConvertAll(x, f => f * -1);
+            values = Array.ConvertAll(values, f => f * -1);
 
-        string[] y = { "usUnEmRate", "frUnEmRate" };
-
-        List<float> values = new List<float>(x);
-        List<string> keys = new List<string>(y);
+        string[] keys = { "usUnEm", "frUnEm" };
 
         MigrationFramework.policyChange(values, keys);
         updateAllData();
@@ -86,14 +79,11 @@ public class FrameworkDriver : MonoBehaviour {
 
     public void jailPolicy(bool up)
     {
-        float[] x = { -0.001f, -0.001f, -0.001f, -0.001f };
+        float[] values = { -0.001f, -0.001f, -0.001f, -0.001f };
         if (!up)
-            x = Array.ConvertAll(x, f => f * -1);
+            values = Array.ConvertAll(values, f => f * -1);
 
-        string[] y = { "usIncRate", "frIncRate", "frLegalIncRate", "frIllegalIncRate" };
-
-        List<float> values = new List<float>(x);
-        List<string> keys = new List<string>(y);
+        string[] keys = { "usInc", "frInc", "frLegalInc", "frIllegalInc" };
 
         MigrationFramework.policyChange(values, keys);
         updateAllData();
