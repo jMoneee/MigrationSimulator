@@ -6,6 +6,16 @@ public static class MigrationFramework
 	private static long frPop = 44406371;
     private static long usPop = 281312807;
 
+    /*
+	private List<double> separatedPopValues = {
+		neMigrants, mwMigrants, sMigrants, wMigrants, //index 0-3
+		usLessThanHighschool, usHighschool, usHighschoolGrad, usTwoYear, usBachelors, usOther, //index 4-9
+		frLessThanHighschool, frHighschool, frHighschoolGrad, frTwoYear, frBachelors, frOther, //index 10-15
+		usInc, frInc, frLegalInc, frIllegalInc, //16-19
+		usUnEm, usNotWorking, frUnEm, frNotWorking //20-23
+	};
+    */
+
     private static Dictionary<string, long> separatedPopValues = new Dictionary<string, long>
     {
         { "neMigrants", 9325338 },
@@ -36,6 +46,18 @@ public static class MigrationFramework
 	
 	private static void updateSeparatePopValues()
 	{
+        /*
+		int usedPop = 0;
+		for (int i = 0; i < 23; i++)
+		{
+			if ((i >= 4 && i < 10) || i == 16 || i == 20 || i == 21)
+				usedPop = usPop;
+			else
+				usedPop = frPop;
+			
+			separatedPopValues. = values.alterPopValue(usPop, i);
+		}
+        */
         Dictionary<string, long> newValues = new Dictionary<string, long>();
         foreach(KeyValuePair<string, long> kvp in separatedPopValues)
         {
@@ -77,8 +99,10 @@ public static class MigrationFramework
         StaticValues.setMigrantIncrease(i);
     }
 
-    // Getters
-    public static long getUsPop() { return usPop; }
+    public static int getMigrants() { return (int)StaticValues.getMigrantIncrease(); }
+	
+	// Getters
+	public static long getUsPop() { return usPop; }
 	public static long getFrPop() { return frPop; }
 	public static Dictionary<string, long> getAllPopValues() { return separatedPopValues; }
     public static long getSpecificPopValue(string dictKey)
@@ -88,10 +112,9 @@ public static class MigrationFramework
         else
             return -1;
     }
-    public static int getMigrants() { return (int)StaticValues.getMigrantIncrease(); }
+	
 
-
-    private static class StaticValues
+	private static class StaticValues
 	{
 		// Proportions of Migrants per region
 		private static float neMigrantsRate = 0.21f; //0
@@ -322,13 +345,10 @@ public static class MigrationFramework
             }
         }
 
-        // Getters
         public static float getUsRateIncrease() { return usBirthRate; }
         public static float getFrRateIncrease() { return frBirthRate; }
         public static float getDeathRate() { return deathRate; }
         public static float getMigrantIncrease() { return migrationIncrease; }
-
-        // Setters
         public static void setMigrantIncrease(int x) { migrationIncrease = x; }
 	}
 }
