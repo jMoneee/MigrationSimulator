@@ -6,6 +6,11 @@ using UnityEngine.UI;
 
 public class FrameworkDriver : MonoBehaviour {
 
+    public Text currentYearText;
+    int currentYear = 2017;
+    public Text usPopText;
+    public Text frPopText;
+
     public Text migrantsText;
 
     public Text usEdText;
@@ -26,22 +31,17 @@ public class FrameworkDriver : MonoBehaviour {
 
     public Slider migrantSlider;
     public Text sliderText;
-
-    // Use this for initialization
+    
     void Start ()
     {
         updateAllData();
         sliderText.text = migrantSlider.value.ToString();
 	}
-	
-	// Update is called once per frame
-	void Update ()
-    {
-    }
 
     public void incrementYear()
     {
         MigrationFramework.yearlyPopUpdate();
+        currentYear++;
         updateAllData();
     }
 
@@ -95,7 +95,6 @@ public class FrameworkDriver : MonoBehaviour {
     public void setMigrantsPerYear()
     {
         MigrationFramework.setMigrantsLevels((int)migrantSlider.value);
-        updateAllData();
         sliderText.text = migrantSlider.value.ToString();
     }
 
@@ -114,6 +113,10 @@ public class FrameworkDriver : MonoBehaviour {
 
     private void updateAllData()
     {
+        currentYearText.text = "Current Year: " + currentYear;
+        frPopText.text = "Foreign born Population: " + MigrationFramework.getFrPop();
+        usPopText.text = "Native born Population: " + MigrationFramework.getUsPop();
+
         migrantsText.text = "NE Migrants: " + MigrationFramework.getSpecificPopValue("neMigrants")
             + "\nMW Migrants: " + MigrationFramework.getSpecificPopValue("mwMigrants")
             + "\nSouth Migrants: " + MigrationFramework.getSpecificPopValue("sMigrants")

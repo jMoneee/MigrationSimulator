@@ -13,8 +13,7 @@ public class UpdateEdGraph : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         BarChart barChart = GetComponent<BarChart>();
-        //if (barChart != null) {
-        //barChart.DataSource.SlideValue( "Some HS", "Native Born", 20, 4f);
+       
         barChart.DataSource.SetValue("Below HS", "Foreign Born", MigrationFramework.getSpecificPopValue("frLessThanHighschool") / 1000);
         barChart.DataSource.SetValue( "Some HS", "Foreign Born", MigrationFramework.getSpecificPopValue("frHighschool")/1000);        barChart.DataSource.SetValue("HS Grad", "Foreign Born", MigrationFramework.getSpecificPopValue("frHighschoolGrad") / 1000);
         barChart.DataSource.SetValue("Some College", "Foreign Born", MigrationFramework.getSpecificPopValue("frTwoYear") / 1000);
@@ -26,6 +25,6 @@ public class UpdateEdGraph : MonoBehaviour {
         barChart.DataSource.SetValue("Some College", "Native Born", MigrationFramework.getSpecificPopValue("usTwoYear") / 1000);
         barChart.DataSource.SetValue("Bachelors", "Native Born", MigrationFramework.getSpecificPopValue("usBachelors") / 1000);
         barChart.DataSource.SetValue("Other", "Native Born", MigrationFramework.getSpecificPopValue("usOther") / 1000);
-        //}
+        
     }
 }
